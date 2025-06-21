@@ -1,20 +1,20 @@
-# 🎧 Audio Modem System – Transmit Text via Sound
+# Audio Modem System – Transmit Text via Sound
 
 This project implements a simple **audio modem** in Python that allows you to send short text messages (8–32 bytes) using sound. The message is encoded into an audio waveform, transmitted over speakers, received by a microphone on another computer, and decoded back into the original text.
 
 ---
 
-## 🚀 Features
+## Features
 
-- ✅ Converts text (8–32 bytes) into audio using **AFSK (Audio Frequency-Shift Keying)**
-- ✅ Plays the audio on one computer (or speaker)
-- ✅ Records the audio on another computer (or microphone)
-- ✅ Decodes the audio waveform back into the original text
-- ✅ Based on open-source modem logic from [`lavajuno/afskmodem`](https://github.com/lavajuno/afskmodem)
+- Converts text (8–32 bytes) into audio using **AFSK (Audio Frequency-Shift Keying)**
+- Plays the audio on one computer (or speaker)
+- Records the audio on another computer (or microphone)
+- Decodes the audio waveform back into the original text
+- Based on open-source modem logic from [`lavajuno/afskmodem`](https://github.com/lavajuno/afskmodem)
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 .
@@ -29,7 +29,7 @@ This project implements a simple **audio modem** in Python that allows you to se
 
 ---
 
-## 🧠 How It Works
+## How It Works
 
 1. The user enters a short message (8–32 bytes).
 2. The `tx_text_to_wav.py` script uses **AFSK modulation** to save the message as an audio file.
@@ -39,7 +39,7 @@ This project implements a simple **audio modem** in Python that allows you to se
 
 ---
 
-## 📦 Installation
+## Installation
 
 ### 1. Clone the repository
 
@@ -94,9 +94,9 @@ from afskmodem.receive import Receiver
 
 ---
 
-## 🧪 How to Use
+## How to Use
 
-### ▶️ Transmit Side (Computer A)
+### ▶Transmit Side (Computer A)
 
 1. Encode the message to audio:
    ```bash
@@ -123,7 +123,7 @@ from afskmodem.receive import Receiver
 
 ---
 
-## 📜 requirements.txt
+## requirements.txt
 
 ```
 numpy
@@ -140,7 +140,7 @@ pip install -r requirements.txt
 
 ---
 
-## 👨‍💻 Credits
+## Credits
 
 - AFSK modem logic by [lavajuno/afskmodem](https://github.com/lavajuno/afskmodem)
 - Wrapping, scripting, and integration by **Guy Eshel** for an academic assignment in Software-Defined Radio
