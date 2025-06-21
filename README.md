@@ -143,8 +143,6 @@ pip install -r requirements.txt
 ## Credits
 
 - AFSK modem logic by [lavajuno/afskmodem](https://github.com/lavajuno/afskmodem)
-- Wrapping, scripting, and integration by **Guy Eshel** for an academic assignment in Software-Defined Radio
-
 ---
 
 ## 📄 License
