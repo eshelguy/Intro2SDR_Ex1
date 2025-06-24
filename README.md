@@ -1,150 +1,82 @@
-# Audio Modem System – Transmit Text via Sound
 
-This project implements a simple **audio modem** in Python that allows you to send short text messages (8–32 bytes) using sound. The message is encoded into an audio waveform, transmitted over speakers, received by a microphone on another computer, and decoded back into the original text.
+# Audio Modem – Ex1 Assignment
 
----
+## Overview
+
+This project is a simple **audio modem system** that transmits text messages using sound. It is designed as part of a computer science assignment to demonstrate digital communication via audio signals using Frequency Shift Keying (FSK).
+
+Using this system, you can:
+- Enter a short text message (8–32 characters)
+- Convert the message to an audio signal (modulation)
+- Transmit the audio via speakers
+- Record and decode the message on another computer via microphone (demodulation)
 
 ## Features
 
-- Converts text (8–32 bytes) into audio using **AFSK (Audio Frequency-Shift Keying)**
-- Plays the audio on one computer (or speaker)
-- Records the audio on another computer (or microphone)
-- Decodes the audio waveform back into the original text
-- Based on open-source modem logic from [`lavajuno/afskmodem`](https://github.com/lavajuno/afskmodem)
+- Binary data encoded as audio (0 → 18000 Hz, 1 → 20000 Hz)
+- Transmission includes a synchronization header (`10101010`)
+- Console-based interaction
+- Clean and readable Python code
+- Based on the open-source project by [sunw4r](https://github.com/sunw4r/audio_modem)
 
----
+## 🛠Installation
 
-## Project Structure
+### Requirements
+Install Python dependencies:
 
-```
-.
-├── afskmodem/               # Local copy of AFSK modem code (from lavajuno/afskmodem)
-├── tx_text_to_wav.py        # Translates input text to audio file
-├── play_audio.py            # Plays audio file via speaker
-├── record_audio.py          # Records audio via mic to a file
-├── rx_wav_to_text.py        # Decodes audio file to text
-├── requirements.txt
-└── README.md
+```bash
+pip install numpy sounddevice scipy
 ```
 
----
+### Files
+- `transmitter.py`: Sends a text message as an audio signal.
+- `receiver.py`: Listens, records, and decodes an incoming audio signal into text.
+
+## Usage
+
+### 1. Transmitting a Message
+
+```bash
+python transmitter.py
+```
+
+You’ll be asked to input a message between 8 and 32 characters. The program will then play it through your speaker.
+
+### 2. Receiving a Message
+
+On a second computer (or the same one with a mic), run:
+
+```bash
+python receiver.py
+```
+
+Keep the microphone close to the speaker. The program will listen for the header and decode the message.
 
 ## How It Works
 
-1. The user enters a short message (8–32 bytes).
-2. The `tx_text_to_wav.py` script uses **AFSK modulation** to save the message as an audio file.
-3. The `play_audio.py` script plays the waveform via speaker.
-4. On the receiving computer, `record_audio.py` records the sound to a WAV file.
-5. Finally, `rx_wav_to_text.py` decodes the audio file and prints the original message.
+1. **Encoding:**
+   - Converts each character into its ASCII binary (8 bits).
+   - Each bit is mapped to a frequency:  
+     `0` → 18000 Hz  
+     `1` → 20000 Hz
+   - Each bit is played for 0.1 seconds.
 
----
+2. **Transmission:**
+   - A sync header `10101010` is sent before the actual message.
+   - The message is played as an audio waveform.
 
-## Installation
+3. **Decoding:**
+   - The receiver records audio for up to 20 seconds.
+   - It detects the synchronization header.
+   - Then it decodes the remaining signal bit-by-bit and converts it back to text.
 
-### 1. Clone the repository
+## Notes
 
-```bash
-git clone https://github.com/your-username/audio-modem.git
-cd audio-modem
-```
+- Works best in a quiet environment.
+- High-frequency tones may be filtered by some speakers or microphones.
+- Message length is limited to 8–32 characters for reliability.
 
-### 2. Install dependencies
+## Based On
 
-```bash
-pip install -r requirements.txt
-```
+This system is adapted from the original FSK audio modem implementation by [sunw4r](https://github.com/sunw4r/audio_modem).
 
-Or install manually:
-
-```bash
-pip install numpy scipy sounddevice soundfile
-```
-
----
-
-## 🛠 Setup of `afskmodem`
-
-This project uses a local version of [`lavajuno/afskmodem`](https://github.com/lavajuno/afskmodem) because it is **not pip-installable**.
-
-### To use it:
-1. Clone it:
-   ```bash
-   git clone https://github.com/lavajuno/afskmodem.git
-   ```
-2. Copy the folder into this project:
-   ```bash
-   cp -r afskmodem ./audio-modem/
-   ```
-
-Now the structure should look like:
-
-```
-audio-modem/
-├── afskmodem/
-├── tx_text_to_wav.py
-├── ...
-```
-
-### In your scripts, make sure you import like this:
-
-```python
-from afskmodem.transmit import Transmitter
-from afskmodem.receive import Receiver
-```
-
----
-
-## How to Use
-
-### ▶Transmit Side (Computer A)
-
-1. Encode the message to audio:
-   ```bash
-   python tx_text_to_wav.py
-   ```
-   _(Enter a short message when prompted)_
-
-2. Play it:
-   ```bash
-   python play_audio.py
-   ```
-
-### 🎙 Receive Side (Computer B)
-
-1. Record audio:
-   ```bash
-   python record_audio.py
-   ```
-
-2. Decode it:
-   ```bash
-   python rx_wav_to_text.py
-   ```
-
----
-
-## requirements.txt
-
-```
-numpy
-scipy
-sounddevice
-soundfile
-```
-
-Install all at once:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## Credits
-
-- AFSK modem logic by [lavajuno/afskmodem](https://github.com/lavajuno/afskmodem)
----
-
-## 📄 License
-
-This project is released under the **MIT License** and includes source code adapted from `afskmodem`, which is also MIT-licensed.
